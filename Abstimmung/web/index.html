@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="index.css">
+	<title>Endabstimmungstool</title>
+    <script>
+	function SelectVoting(x)
+	{
+	    let rep = '';
+	    for(let i = 0; i < x.children.length; i++)
+	    {
+		if(x.children[i].classList.contains('voteit'))
+		{
+		    console.log(x.children[i].innerHTML);
+		    rep = x.children[i].innerHTML;
+		    break;
+		}
+	    }
+	    if(rep!='')
+	    {
+		document.getElementById('step1').style.display = 'none';
+		document.getElementById('repe').innerHTML = rep;
+		document.getElementById('step2').style.display = 'block';
+	    }
+
+	}
+	function checkkey()
+	{
+	    let key = document.getElementById('srchfor').value;
+	    let name = document.getElementById('repe').innerHTML;
+	    let xhr = new XMLHttpRequest();
+	    xhr.open("POST","/api/submitVote?key="+key+"&name="+name,true);
+	    xhr.onload = function() {
+		let vl = document.getElementById('result');
+		if(xhr.status == 200)
+		{
+		    vl.innerHTML = "VOTED SUCCESSFULLY!";
+		    vl.style.color = 'green';
+		}   
+		else
+		{
+		    vl.innerHTML = "VOTE FAILED!";
+		    vl.style.color = 'red';
+		}
+
+		window.setTimeout(function() {
+		    window.location = window.location;
+		},2000);
+
+	    }
+	    xhr.send(null);
+	}
+    </script>
+    </head>
+    <body>
+	<nav class='topnav background-dark lightblue-fx'>
+	    <p class='topnav-center bold'>
+	    ENDABSTIMMUNG
+	    </p>
+	</nav>
+	<div class="item-whatever">
+	    <div id='step1'>
+	    <h1>Waehlen Sie ihren Reprasentanten</h1>
+	    <div id='chosing' class='choselist'>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Albertin, Johanna</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Calwore, Ray</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Ende, Marc</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Fuchsstein, Elias Lou</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Gardener, Charlie</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Gaylay, Erkel</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Grimm, Marja</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Grimm, Tom</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Knaub, Sergej</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Mati, Plinio</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Mati, Sarah</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Reh, Dascha</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Rose, Elaine</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    Saint-Just, Maxine Pierre</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Schwarz, Eva</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Albertin, David Maria</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Grass, Shari</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Stiegler, Eva</span>
+		    <img src='next.svg'/>
+		</a>
+		<a onclick='SelectVoting(this);'>
+		    <div></div>
+		    <span class='voteit'>Drake</span>
+		    <img src='next.svg'/>
+		</a>
+	    </div>
+	    </div>
+	    <div id='step2'>
+		<h1 id='banner'>Ihr Reprasentant ist: <span id='repe'></span></h1>
+		<p>Bitte geben Sie ihren Token ein!</p>
+		<div id='tpdo' class='topnav-right topnav-item' style='width: 80%; max-width: 15rem;'>
+	            <input type='text' id='srchfor' placeholder='Suche nach Person...'><img class='searchbutton' src="next.svg" onclick='checkkey();'></img></input>
+		</div>
+		<h2 id='result'></h2>
+	    </div>
+	</div>
+	<div id='footer'></div>
+
+    </body>
+</html>
