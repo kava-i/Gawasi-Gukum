@@ -5,7 +5,118 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="index.css">
-	<title>Kava-I main page</title>
+	<title>DATA Extraction tool</title>
+    <script>
+	function hassuspect()
+	{
+	    let xhr = new XMLHttpRequest();
+	    xhr.open("GET","/api/hasSuspect?name="+document.getElementById('srchfor').value,true);
+	    xhr.onload = function() {
+		if(xhr.status == 200)
+		{
+		    document.getElementById("result").innerHTML = "Found suspect";
+		    document.getElementById("show_on_exit").style.display = "block";
+		}
+		else
+		{
+		    document.getElementById("result").innerHTML = "Cannot find suspect";
+		}
+	    }
+	    xhr.send(null);
+	}
+	function AddMoreInfo()
+	{
+	    let list = document.createElement("li");
+	    list.classList.add("center-item");
+	    list.classList.add("background-dark");
+	    list.innerHTML = "<input type='text' placeholder='Add suspect info' class='center-item information-gather'></input>";
+	    document.getElementById('itemlist').insertBefore(list,document.getElementById('AddItem'));
+	    if(document.getElementById('itemlist').children.length==11)
+	    {
+		document.getElementById('AddItem').style.display = 'none';
+	    }
+
+	}
+
+	function GenerateRandomString(x)
+	{
+	    let str = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+	    
+	    x.innerHTML = str;
+	}
+
+	function grsfinish(x,ch,len)
+	{
+	    let str = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+	    str = ch.substr(0,len)+str.substr(0,ch.length-len);
+	    x.innerHTML = str;
+	}
+
+	let timeout = null;
+	function StartExtraction(x)
+	{
+	    x.onclick=null;
+	    timeout = window.setTimeout(function(){GenerateRandomString(x);StartExtraction(x);},50);
+	}
+
+	function FinishExtraction(x, str,len,succ)
+	{
+	    window.clearTimeout(timeout);
+	    if(str.length<len)
+	    {
+		if(succ)
+		    x.classList.add("success");
+		else
+		    x.classList.add("failure");
+		return;
+	    }
+	    timeout = window.setTimeout(function(){grsfinish(x,str,len);FinishExtraction(x,str,len+1,succ);},100);
+	}
+
+	function SendRequest(x)
+	{
+	    x.classList.remove('activeable');
+	    let xhr = new XMLHttpRequest();
+	    let i = document.getElementsByClassName("information-gather");
+	    let keywords = "&keywords="; 
+	    for(let x = 0; x < i.length; x++)
+	    {
+		if(i[x].value=="")
+		    continue;
+		if(x!=0)
+		    keywords+=";";
+		keywords+=i[x].value;
+	    }
+	    console.log("PARSED: "+keywords);
+
+	    xhr.open("GET","/api/queryInformation?name="+document.getElementById('srchfor').value+keywords,true);
+	    xhr.onload = function() {
+		if(xhr.status == 200)
+		{
+		    window.setTimeout(function(){FinishExtraction(x,'EXTRACTION SUCCESSFUL',1,true);},2000);
+		    let json = JSON.parse(xhr.responseText);
+		    document.getElementById("extractedinfo").style.display = "block";
+		    if(json==null)
+		    {
+			document.getElementById("extractedinfo").innerHTML +="<p>Could not extract any information...</p>";
+		    }
+		    else
+		    {
+			document.getElementById("extractedinfo").innerHTML+="<p>Scored "+information.right_infos+" right guessed keywords</p>";
+			for(let i = 0; i < json.information.length; i++)
+			{
+			    document.getElementById("extractedinfo").innerHTML += "<p>"+i+". "+json.information[i]+"</p>";
+			}
+		    }
+		}
+		else
+		{
+		    window.setTimeout(function(){FinishExtraction(x,'EXTRACTION FAILED',1,true);},2000);
+		}
+	    }
+	    xhr.send(null);
+	}
+    </script>
     </head>
     <body>
 	<nav class='topnav background-dark lightblue-fx'>
@@ -16,9 +127,25 @@
 	    </p>
 	</nav>
 	<div class="item-whatever">
-	    <p>Bitte geben sie den Namend er verdaechtigen Person ein:</p>
+	    <p>Bitte geben sie den Namen er verdaechtigen Person ein:</p>
 	    <div class='topnav-right topnav-item' style='width: 20rem; max-width: 35%;'>
-		<input type='text' placeholder='Search this site...'><img class='searchbutton' src="search.svg"></img></input>
+		<input type='text' id='srchfor' placeholder='Suche nach Person...'><img class='searchbutton' src="search.svg" onclick='hassuspect();'></img></input>
+	    </div>
+	    <p id='result'></p>
+
+	    <div id='show_on_exit'>
+	    <ol id='itemlist' class='center-item'>
+		<li class='center-item background-dark'>
+		    <input type='text' placeholder='Add suspect info' class='center-item information-gather'></input>
+		</li>
+		<li id='AddItem' class='center-item background-dark add-item' onclick='AddMoreInfo();'>
+		    <a>Add more info</a>
+		</li>
+	    </ol>
+	    <h2 class='extbut activeable' ondblclick='FinishExtraction(this,"EXTRACTION SUCCESSFUL",1,false);' onclick='StartExtraction(this);SendRequest(this);'>START EXTRACTION</h2>
+		<div id='extractedinfo'>
+		    <p>Extracted Following information:</p>
+		</div>
 	    </div>
 	    </div>
 

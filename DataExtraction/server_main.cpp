@@ -39,6 +39,24 @@ void own_split(const std::string &pill, char c, std::vector<std::string> &vec)
     }
 }
 
+void HasSuspect(const Request &req, Response &resp)
+{
+    try
+    {
+	std::string name = req.get_param_value("name");
+	name+=".json";
+
+	std::ifstream read("data/"+name);
+	if(!read)
+	    throw 0;
+
+	resp.status = 200;
+    }
+    catch(...)
+    {
+	resp.status = 404;
+    }
+}
 void QueryInformation(const Request &req, Response &resp)
 {
     try
@@ -76,6 +94,7 @@ void QueryInformation(const Request &req, Response &resp)
 	}
 	std::cout << counter << " Übereinstimmungen.\n\n\n";
 	nlohmann::json information;
+	information["right_infos"] = counter;
 	if(counter >= 2) information["info"].push_back(decrypt(listInfos[0], key));
 	if(counter >= 4) information["info"].push_back(decrypt(listInfos[1], key));
 	if(counter >= 6) information["info"].push_back(decrypt(listInfos[2], key));
@@ -94,6 +113,7 @@ int main()
     signal(SIGTERM, sig_handler);
 
     srv.Get("/api/queryInformation", &QueryInformation);
+    srv.Get("/api/hasSuspect",&HasSuspect);
     srv.listen("localhost",9709);
     return 0;
 }

@@ -12,6 +12,7 @@ body {
     height: 100vh;
     width: 100vw;
     overflow: hidden;
+    overflow-y: auto;
 }
 
 a {
@@ -23,12 +24,69 @@ h1 {
     z-index: 0;
 }
 
+li.center-item input {
+    position: relative;
+    width: calc(50%);
+    min-width: 10rem;
+    padding-top: 0.5rem;
+    background-color: rgba(0,0,0,0);
+    opacity: 0.6;
+    color: white;
+    border: 0;
+    border-bottom: 1px solid white;
+    text-align: center;
+
+}
+
+.success {
+    background-color: rgba(80,200,50,0.2);
+}
+
+.failure {
+    background-color: rgba(200,60,50,0.2);
+}
+
+.extbut {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid black;
+    color: white;
+    text-align: center;
+}
+
+#show_on_exit {
+    display: none;
+}
+
+#extractedinfo {
+    display: none;
+}
+
+.activeable:hover {
+    cursor: pointer;
+    background-color: rgba(80,10,150,0.4);
+}
+
+
+li.center-item {
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+li.add-item {
+    text-align: center;
+    cursor:pointer;
+    margin-top: 1rem;
+}
+
 .topnav {
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     margin: 0;
+    z-index: 5;
     border-bottom: 1px solid grey;
 }
 
@@ -58,13 +116,24 @@ h1 {
     transform: translateX(-50%);
 }
 
+.center-item {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+ol.center-item {
+    background-color: rgba(0,0,0,0.6);
+    color: white;
+}
+
 .background-dark {
     background-color: rgba(0,0,0,0.6);
     color: white;
 }
 .item-whatever {
     padding: 5rem;
-    margin-top: 10rem !important;
+    height: 100vh;
     background-color: rgba(0,0,0,0.6);
     color: white;
 }
@@ -126,7 +195,20 @@ div.topnav-right:hover input,div.topnav-right:focus-within input {
     font-weight: bold;
 }
 
+.add-item {
+    padding: 1rem;
+}
 /*background-color: #1565c0;*/
+.add-item:hover {
+  background-color: rgba(100,30,200,0.4);
+    transition: ease-in 0.3s;
+}
+
+.add-item:active,.add-item:focus {
+    background-color: rgba(90,20,170,0.7);
+    font-weight: bold;
+    transition: ease-out 1s;
+}
 
 .topnav.lightblue-fx a:hover {
     background-color: rgba(100,30,200,0.4);
