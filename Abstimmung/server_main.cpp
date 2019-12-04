@@ -7,6 +7,7 @@
 
 using namespace httplib;
 Server srv;
+std::map<std::string,int> mapVote;
 
 void sig_handler(int)
 {
@@ -15,7 +16,7 @@ void sig_handler(int)
 }
 
 std::mutex m_lck;
-bool isKeyValid(std::string k, std::vector<std::string> &usedKeys)
+bool isKeyValid(std::string k, const std::vector<std::string> &usedKeys)
 {
     for(auto &it : usedKeys)
 	if(k==it)
@@ -29,10 +30,22 @@ void submitVote(const Request &req, Response &resp,std::vector<std::string> &use
     std::lock_guard g(m_lck);
     try
     {
+	std::cout<<"SUBMIT VOTE CALLED!"<<std::endl;
 	std::string k = req.get_param_value("key",0);
+	std::string name = req.get_param_value("name",0);
 	if(!isKeyValid(k,usedKeys))
 	    throw 0;
 	usedKeys.push_back(k);
+	if(mapVote.find(name)!=mapVote.end())
+		mapVote[name]++;
+	else
+		mapVote[name] = 1;
+	
+	std::cout<<"\n\n\n~~~~~~ VOTING RESULTS ~~~~~~"<<std::endl;
+	for(auto &it : mapVote)
+	{
+		std::cout<<it.first<<" has "<<it.second<<" votes!"<<std::endl;
+	}
 	resp.status = 200;
     }
     catch(...)
@@ -74,7 +87,7 @@ int main()
 	
     srv.Get("/api/possibleVoters",&getPossibleVoters);
     srv.Get("/api/isKeyValid",[&](const Request &req, Response &resp){validKey(req,resp,usedKeys);});
-    srv.Get("/api/submitVote",[&](const Request &req, Response &resp){submitVote(req,resp,usedKeys);});
+    srv.Post("/api/submitVote",[&](const Request &req, Response &resp){submitVote(req,resp,usedKeys);});
     srv.listen("localhost",9710);
     return 0;
 }
