@@ -7,6 +7,7 @@
 #include "json.hpp"
 #include <string>
 #include <fstream>
+#include <filesystem>
 
 using namespace httplib;
 Server srv;
@@ -108,12 +109,41 @@ void QueryInformation(const Request &req, Response &resp)
     }
 }
 
+void getsugs(const Request &req, Response &resp, const std::vector<std::string> &filenames)
+{
+	try
+	{
+		nlohmann::json sugs;
+		for(auto &it : filenames)
+		{
+			sugs.push_back(it);
+		}
+		resp.status = 200;
+		resp.set_content(sugs.dump(),"application/json");
+	}
+	catch(...)
+	{
+		resp.status = 500;
+		resp.set_content("{}","application/json");
+	}
+}
+
 int main()
 {
     signal(SIGTERM, sig_handler);
+    std::vector<std::string> NameVector;
+
+    for(auto &it : std::filesystem::directory_iterator("data"))
+    {
+	std::string filename = it.path().filename();
+	std::string name = filename.substr(0,filename.find_last_of('.'));
+	std::cout<<"Character name extracted: "<<name<<std::endl;
+	NameVector.push_back(std::move(name));
+    }
 
     srv.Get("/api/queryInformation", &QueryInformation);
     srv.Get("/api/hasSuspect",&HasSuspect);
+    srv.Get("/api/suggestions",[&](const Request &req, Response &resp){getsugs(req,resp,NameVector);});
     srv.listen("localhost",9709);
     return 0;
 }
