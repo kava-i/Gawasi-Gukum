@@ -14,16 +14,23 @@
 				}
 				else
 				{
-					window.setTimeout(sync_server,500);
+					window.setTimeout(sync_server,1000);
 				}
 			}
 			xhr.send(null);
 
 		}
+		function enable_stream(x)
+		{
+			x.style.display = 'none';
+			document.getElementById('player').style.display = 'block';
+		}
 	window.addEventListener("load",sync_server);
 	</script>
 </head>
 <body>
-	<iframe src="silence.mp3" allow="autoplay" id="audio"></iframe>
-	<audio controls id='player' src='audiowalk.mp3' preload='auto'></audio>	
+	<center>
+	<button onclick='enable_stream(this);'>Enable Stream</button>
+	<audio controls id='player' style='display: none;' src='audiowalk.mp3' preload='auto'></audio>	
+	</center>
 </body>
