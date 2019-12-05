@@ -14,7 +14,7 @@
 				}
 				else
 				{
-					window.setTimeout(sync_server,1000);
+					window.setTimeout(sync_server,400);
 				}
 			}
 			xhr.send(null);
@@ -30,7 +30,7 @@
 </head>
 <body>
 	<center>
-	<button onclick='enable_stream(this);'>Enable Stream</button>
+	<button onclick='enable_stream(this);' style='font-size: x-large;padding:1rem;width: 15rem;'>Enable Stream</button>
 	<audio controls id='player' style='display: none;' src='audiowalk.mp3' preload='auto'></audio>	
 	</center>
 </body>

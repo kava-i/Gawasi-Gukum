@@ -1,5 +1,6 @@
 #include <iostream>
 #include <signal.h>
+#define CPPHTTPLIB_THREAD_POOL_COUNT 4
 #include "../DataExtraction/httplib.h"
 #include "../DataExtraction/json.hpp"
 #include <string>
@@ -20,7 +21,7 @@ int main()
     signal(SIGTERM, sig_handler);
     std::vector<std::string> usedKeys;
 	
-    srv.Get("/api/audio/sync_server",[&](const Request &req, Response &resp){resp.status=200;});
+    srv.Get("/api/audio/sync_server",[](const Request &req, Response &resp){resp.status=200;});
     srv.listen("localhost",9711);
     return 0;
 }
