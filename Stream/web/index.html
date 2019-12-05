@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<head>
+	<script>
+		function sync_server()
+		{
+			let xhr = new XMLHttpRequest();
+			xhr.open("GET","/api/audio/sync_server",true);
+			xhr.onload = function()
+			{
+				if(xhr.status==200)
+				{
+					console.log("Lets go!");
+					document.getElementById('player').play();
+				}
+				else
+				{
+					window.setTimout(sync_server,500);
+				}
+			}
+			xhr.send(null);
+
+		}
+	window.addEventListener("load",sync_server);
+	</script>
+</head>
+<body>
+	<audio id='player' src='audiowalk.mp3' preload='auto'></audio>	
+</body>
