@@ -21,8 +21,11 @@ bool isKeyValid(std::string k, const std::vector<std::string> &usedKeys)
     for(auto &it : usedKeys)
 	if(k==it)
 	    return false;
-    return true;
-
+    std::vector<std::string> validKeys = {"TpCwWQWFbAouoGTTF29z","hi6eDnZ3utLSrDY9iBBr","qkm6jRyEF5rtRRY96tcd","ubd8pj5KuUv2veUd6x3k","MgcMohfNGLgYuMPgbUU3","iv9ZtiaHaEvMmxCoiEAo","f53cXruQF6JdzsofXnJu","tHDnd7BAe75JZZxWcVHA","z7w2Lmkzv77SjRRyautV","ryfcfV2Ta2KBPbVc4jSn","ctJdeNZwJwWxUBWeGDMR","ewomxBe6isgTEE9NwtKK","HBpfsokEZMcjhhhEYPTd","v84weChZJdDe6FEWJS87","gmfyq6f5qWcvpJDKefAr","PK3pK72keovpYErt6X7A","VswHLGUE7RfueMThmtpz","D2redXVfgd2gbvmZN7n5","HSNvQJFfc5QXpkZaUnLV","MkJHeovePPuTYPEVdoWe","FCVBwnhzxVhC7eaFH9VR","hMPN5vcyLPXomjb8ok7x","swxwiMSUoYF7QTbasC6f","8LF5JVhKg4qSAMN9Shdi"};
+    for(auto &it : validKeys)
+	if(k==it)
+	    return true;
+    return false;
 }
 
 void submitVote(const Request &req, Response &resp,std::vector<std::string> &usedKeys)
