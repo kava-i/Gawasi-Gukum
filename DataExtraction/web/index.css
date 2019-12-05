@@ -6,13 +6,35 @@ html {
 body {
     margin: 0;
     padding: 0;
-    background-image: url("wallpaper.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 100vh;
-    width: 100vw;
     overflow: hidden;
     overflow-y: auto;
+}
+
+.dropdownsugs {
+	height: 10rem;
+	overflow: auto;
+}
+
+.dropdownsugs a {
+	display: block;
+    	background-color: rgba(0,0,0,0.6);
+}
+
+.dropdownsugs a:hover {
+    background-color: rgba(80,10,150,0.6);
+    cursor: pointer;
+}
+
+.ultradiv {
+	z-index: -5;
+	position: fixed;
+	top:0;
+	left:0;
+	background-image: url("wallpaper.png");
+    	background-size: cover;
+   	background-repeat: no-repeat;
+   	height: 100vh;
+    	width: 100vw;
 }
 
 a {
@@ -39,28 +61,45 @@ li.center-item input {
 }
 
 .success {
-    background-color: rgba(80,200,50,0.2);
+    background-color: rgba(80,200,50,0.6) !important;
 }
 
 .failure {
-    background-color: rgba(200,60,50,0.2);
+    background-color: rgba(200,60,50,0.6) !important;
+}
+
+.border-succ {
+	border: 2px solid green;
+}
+
+.border-failure {
+	border: 2px solid red;
 }
 
 .extbut {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
+    width: 80%;
     border: 1px solid black;
+    background-color: rgba(0,0,0,0.6);
     color: white;
     text-align: center;
 }
 
 #show_on_exit {
     display: none;
+    background-color: rgba(0,0,0,0.6);
 }
 
 #extractedinfo {
     display: none;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-bottom: 2rem;
+    width: 80%;
+    
 }
 
 .activeable:hover {
@@ -131,12 +170,12 @@ ol.center-item {
     background-color: rgba(0,0,0,0.6);
     color: white;
 }
+
 .item-whatever {
-    padding: 5rem;
-    height: 100vh;
-    background-color: rgba(0,0,0,0.6);
+    padding-top: 5rem;
     color: white;
 }
+
 .item-whatever p {
     text-align: center;
 }

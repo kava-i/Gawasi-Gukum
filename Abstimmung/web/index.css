@@ -14,12 +14,18 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-     background-image: url("wallpaper.jpg");
+     background-image: url("wallpaper.png");
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
     width: 100vw;
     z-index: -1;
+}
+
+#result {
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 #step2 {
@@ -34,6 +40,10 @@ a {
 h1 {
     z-index: 0;
     text-align: center;
+}
+
+h2 {
+	text-align: center;
 }
 
 li.center-item input {
@@ -282,7 +292,7 @@ div.dropdown ul li hr{
     margin-top: 1rem;
     padding: 0.5rem;
     display: block;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(60,60,60,0.6);
     text-align: center; 
     z-index: 1;
     cursor: pointer;
@@ -301,7 +311,7 @@ div.dropdown ul li hr{
     display: none;
 }
 
-.choselist a:hover div {
+.choselist a:hover div, .choselist a:active div, .choselist a:focus div {
     width: 100%;
     z-index: -1;
     transition: ease-in-out 0.5s;
