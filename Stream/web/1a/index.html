@@ -10,7 +10,8 @@
 				if(xhr.status==200)
 				{
 					console.log("Lets go!");
-					document.getElementById('player').play();
+					window.setTimeout(function(){
+						document.getElementById('player').play();},10000);
 				}
 				else
 				{
@@ -31,6 +32,6 @@
 <body>
 	<center>
 	<button onclick='enable_stream(this);' style='font-size: x-large;padding:1rem;width: 15rem;'>Enable Stream</button>
-	<audio controls id='player' style='display: none;' src='audiowalk.mp3' preload='auto'></audio>	
+	<audio controls id='player' preload='auto' style='display: none;' src='audiowalk.mp3'></audio>	
 	</center>
 </body>

@@ -1,0 +1,21 @@
+{
+    "words":
+        [
+            "hund", 
+            "fuchs", 
+            "wraps", 
+            "tom", 
+            "ja", 
+            "nein", 
+            "christ",
+	    "freund",
+            "traurig"
+        ], 
+
+    "infos":
+        [
+            "Ich bin Info 1", 
+            "Ich bin Info 2 und meistens wichtiger als info 1", 
+            "Ich bin die wichtigste Info denn aller guten Dinge sind 3"
+        ]
+}
