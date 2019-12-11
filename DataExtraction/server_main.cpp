@@ -21,6 +21,7 @@ void sig_handler(int)
 void own_split(const std::string &pill, char c, std::vector<std::string> &vec)
 {	    auto start = 0;
     std::string tmp;
+    
     while(true)
     {
 	auto pos = pill.find(c,start);
