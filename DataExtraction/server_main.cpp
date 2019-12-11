@@ -10,6 +10,7 @@
 #include <filesystem>
 
 using namespace httplib;
+
 Server srv;
 
 void sig_handler(int)
